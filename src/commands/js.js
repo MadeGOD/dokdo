@@ -4,7 +4,7 @@ const Discord = require('discord.js')
 module.exports = async function js (message, parent) {
   // eslint-disable-next-line no-unused-vars
   const { client } = parent // for eval
-  if (!message.data.args) return message.channel.send('Missing Arguments.')
+  if (!message.data.args) return message.channel.send('Missing Arguments.', { reply: { messageReference: message.id }})
 
   // eslint-disable-next-line no-eval
   const res = new Promise(resolve => resolve(eval(message.data.args)))
@@ -18,7 +18,7 @@ module.exports = async function js (message, parent) {
         else if (isinstance(target, Discord.MessageAttachment)) {
           await message.channel.send({
             files: target instanceof Discord.Collection ? target.array() : [target]
-          })
+          }, { reply: { messageReference: message.id }})
         }
       }
 
