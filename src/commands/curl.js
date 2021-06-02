@@ -2,7 +2,7 @@ const fetch = require('node-fetch')
 const { ProcessManager, HLJS } = require('../utils')
 
 module.exports = async function curl (message, parent) {
-  if (!message.data.args) return message.channel.send('Missing Arguments.')
+  if (!message.data.args) return message.channel.send('Missing Arguments.', { reply: { messageReference: message.id }, allowedMentions: { repliedUser: false }})
 
   let type
   const res = await fetch(message.data.args.split(' ')[0]).then(async r => {
