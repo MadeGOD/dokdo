@@ -2,7 +2,7 @@ const fs = require('fs')
 const { ProcessManager, HLJS } = require('../utils')
 
 module.exports = async function curl (message, parent) {
-  if (!message.data.args) return message.channel.send('Missing Arguments.')
+  if (!message.data.args) return message.channel.send('Missing Arguments.', { reply: { messageReference: message.id }, allowedMentions: { repliedUser: false }})
   const filename = message.data.args
   let msg
   fs.readFile(filename, async (err, data) => {
