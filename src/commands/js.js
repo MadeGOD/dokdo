@@ -4,7 +4,7 @@ const Discord = require('discord.js')
 module.exports = async function js (message, parent) {
   // eslint-disable-next-line no-unused-vars
   const { client } = parent // for eval
-  if (!message.data.args) return message.channel.send('Missing Arguments.', { reply: { messageReference: message.id }})
+  if (!message.data.args) return message.channel.send('Missing Arguments.', { reply: { messageReference: message.id }, allowedMentions: { repliedUser: false }})
 
   // eslint-disable-next-line no-eval
   const res = new Promise(resolve => resolve(eval(message.data.args)))
@@ -14,11 +14,11 @@ module.exports = async function js (message, parent) {
       typeOf = typeof output
 
       async function prettify (target) {
-        if (target instanceof Discord.MessageEmbed) await message.channel.send(target)
+        if (target instanceof Discord.MessageEmbed) await message.channel.send(target, { reply: { messageReference: message.id }, allowedMentions: { repliedUser: false }})
         else if (isinstance(target, Discord.MessageAttachment)) {
           await message.channel.send({
             files: target instanceof Discord.Collection ? target.array() : [target]
-          }, { reply: { messageReference: message.id }})
+          }, { reply: { messageReference: message.id }, allowedMentions: { repliedUser: false }})
         }
       }
 
@@ -26,9 +26,9 @@ module.exports = async function js (message, parent) {
         for (const value of output) {
           prettify(value)
 
-          if (typeof value === 'function') await message.channel.send(value.toString())
-          else if (typeof value === 'string') await message.channel.send(value)
-          else await message.channel.send(inspect(value, { depth: 1, maxArrayLength: 200 }))
+          if (typeof value === 'function') await message.channel.send(value.toString(), { reply: { messageReference: message.id }, allowedMentions: { repliedUser: false }})
+          else if (typeof value === 'string') await message.channel.send(value, { reply: { messageReference: message.id }, allowedMentions: { repliedUser: false }})
+          else await message.channel.send(inspect(value, { depth: 1, maxArrayLength: 200 }), { reply: { messageReference: message.id }, allowedMentions: { repliedUser: false }})
         }
       }
 
